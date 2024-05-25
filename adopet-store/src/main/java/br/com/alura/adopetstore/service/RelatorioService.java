@@ -31,7 +31,7 @@ public class RelatorioService {
     }
 
     public RelatorioFaturamento faturamentoObtido() {
-        var dataOntem = LocalDate.now().minusDays(1);
+        var dataOntem = LocalDate.now();
         var faturamentoTotal = pedidoRepository.faturamentoTotalDoDia(dataOntem);
 
         var estatisticas = pedidoRepository.faturamentoTotalDoDiaPorCategoria(dataOntem);
