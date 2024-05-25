@@ -1,6 +1,7 @@
 package br.com.alura.adopetstore.exception;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.OptimisticLockException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -56,6 +57,11 @@ public class TratadorDeErros {
     @ExceptionHandler(Exception.class)
     public ResponseEntity tratarErro500(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro: " +ex.getLocalizedMessage());
+    }
+
+    @ExceptionHandler(OptimisticLockException.class)
+    public ResponseEntity tratarErroEstoque(OptimisticLockException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro: Outro cliente fez um pedido que continha seus itens");
     }
 
     private record DadosErroValidacao(String campo, String mensagem) {
